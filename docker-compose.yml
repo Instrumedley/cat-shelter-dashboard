@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cat_shelter_db
+    environment:
+      POSTGRES_DB: cat_shelter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cat_shelter_network
+
+  backend:
+    build: ./backend
+    container_name: cat_shelter_backend
+    ports:
+      - "7000:7000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/cat_shelter
+      NODE_ENV: development
+      PORT: 7000
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - cat_shelter_network
+
+  frontend:
+    build: ./frontend
+    container_name: cat_shelter_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:7000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - cat_shelter_network
+
+volumes:
+  postgres_data:
+
+networks:
+  cat_shelter_network:
+    driver: bridge
