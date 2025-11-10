@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getDashboardMetrics, getAdoptionHistory } from '../controllers/metricsController';
-import { authenticate, authorize } from '../middleware/auth';
+import { optionalAuthenticate } from '../middleware/auth';
 
 const router = Router();
 
@@ -10,13 +10,12 @@ const router = Router();
  *   get:
  *     summary: Get dashboard metrics
  *     tags: [Metrics]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     responses:
  *       200:
  *         description: Dashboard metrics retrieved successfully
  */
-router.get('/dashboard', authenticate, getDashboardMetrics);
+router.get('/dashboard', optionalAuthenticate, getDashboardMetrics);
 
 /**
  * @swagger
@@ -24,12 +23,11 @@ router.get('/dashboard', authenticate, getDashboardMetrics);
  *   get:
  *     summary: Get adoption history for charts
  *     tags: [Metrics]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     responses:
  *       200:
  *         description: Adoption history retrieved successfully
  */
-router.get('/adoption-history', authenticate, getAdoptionHistory);
+router.get('/adoption-history', optionalAuthenticate, getAdoptionHistory);
 
 export { router as metricsRoutes };

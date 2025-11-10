@@ -67,3 +67,109 @@ export interface ApiResponse<T> {
     stack?: string;
   };
 }
+
+// New endpoint types
+export interface TotalAdoptionsResponse {
+  total: number;
+  series: Array<{
+    month: string;
+    count: number;
+  }>;
+  min: {
+    month: string;
+    count: number;
+  } | null;
+  max: {
+    month: string;
+    count: number;
+  } | null;
+}
+
+export interface CatsStatusResponse {
+  available: number;
+  booked: number;
+  available_breakdown: {
+    kittens: number;
+    adults: number;
+    seniors: number;
+  };
+  series: {
+    available: Array<{
+      month: string;
+      count: number;
+    }>;
+    booked: Array<{
+      month: string;
+      count: number;
+    }>;
+  };
+  min: {
+    month: string;
+    count: number;
+  } | null;
+  max: {
+    month: string;
+    count: number;
+  } | null;
+}
+
+export interface IncomingCatsResponse {
+  rescued_this_month: number;
+  surrendered_this_month: number;
+  series: {
+    rescued: Array<{
+      month: string;
+      count: number;
+    }>;
+    surrendered: Array<{
+      month: string;
+      count: number;
+    }>;
+    total: Array<{
+      month: string;
+      count: number;
+    }>;
+  };
+  min: {
+    month: string;
+    count: number;
+  } | null;
+  max: {
+    month: string;
+    count: number;
+  } | null;
+}
+
+export interface NeuteredCatsResponse {
+  neutered_this_month: number;
+  spayed_this_month: number;
+  series: {
+    neutered: Array<{
+      month: string;
+      count: number;
+    }>;
+    spayed: Array<{
+      month: string;
+      count: number;
+    }>;
+    total: Array<{
+      month: string;
+      count: number;
+    }>;
+  };
+  min: {
+    month: string;
+    count: number;
+  } | null;
+  max: {
+    month: string;
+    count: number;
+  } | null;
+}
+
+export interface CampaignResponse {
+  campaign_goal: number;
+  current_donated: number;
+  start_date: string;
+  end_date: string | null;
+}

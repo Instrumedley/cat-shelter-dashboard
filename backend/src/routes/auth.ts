@@ -9,6 +9,7 @@ const router = Router();
  *   post:
  *     summary: User login
  *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -21,11 +22,28 @@ const router = Router();
  *             properties:
  *               username:
  *                 type: string
+ *                 example: admin
  *               password:
  *                 type: string
+ *                 example: admin
  *     responses:
  *       200:
  *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: JWT token to use for authenticated requests
+ *                     user:
+ *                       type: object
  *       401:
  *         description: Invalid credentials
  */
@@ -37,6 +55,7 @@ router.post('/login', login);
  *   post:
  *     summary: Register new user
  *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -44,13 +63,22 @@ router.post('/login', login);
  *           schema:
  *             type: object
  *             required:
+ *               - name
  *               - username
  *               - password
+ *               - email
+ *               - phone
  *               - role
  *             properties:
+ *               name:
+ *                 type: string
  *               username:
  *                 type: string
  *               password:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
  *                 type: string
  *               role:
  *                 type: string

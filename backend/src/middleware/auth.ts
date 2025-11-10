@@ -26,6 +26,31 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
   }
 };
 
+/**
+ * Optional authentication - sets user if token is provided, but doesn't fail if not
+ */
+export const optionalAuthenticate = (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+  
+  if (!token) {
+    // No token provided - allow public access
+    req.user = undefined;
+    return next();
+  }
+  
+  // Token provided - try to verify it
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+    req.user = decoded;
+  } catch (error) {
+    // Invalid or expired token - allow public access without user
+    req.user = undefined;
+  }
+  
+  // Always continue - never block the request
+  next();
+};
+
 export const authorize = (...roles: string[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user) {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getCats, getCatById, createCat, updateCat, deleteCat } from '../controllers/catsController';
-import { authenticate, authorize } from '../middleware/auth';
+import { authenticate, authorize, optionalAuthenticate } from '../middleware/auth';
 
 const router = Router();
 
@@ -10,8 +10,7 @@ const router = Router();
  *   get:
  *     summary: Get all cats
  *     tags: [Cats]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     responses:
  *       200:
  *         description: Cats retrieved successfully
@@ -24,7 +23,7 @@ const router = Router();
  *       201:
  *         description: Cat created successfully
  */
-router.get('/', authenticate, getCats);
+router.get('/', optionalAuthenticate, getCats);
 router.post('/', authenticate, authorize('clinic_staff', 'super_admin'), createCat);
 
 /**
@@ -33,8 +32,7 @@ router.post('/', authenticate, authorize('clinic_staff', 'super_admin'), createC
  *   get:
  *     summary: Get cat by ID
  *     tags: [Cats]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -73,7 +71,7 @@ router.post('/', authenticate, authorize('clinic_staff', 'super_admin'), createC
  *       200:
  *         description: Cat deleted successfully
  */
-router.get('/:id', authenticate, getCatById);
+router.get('/:id', optionalAuthenticate, getCatById);
 router.put('/:id', authenticate, authorize('clinic_staff', 'super_admin'), updateCat);
 router.delete('/:id', authenticate, authorize('super_admin'), deleteCat);
 

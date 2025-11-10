@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getAdoptions, getAdoptionById, createAdoption, updateAdoption, deleteAdoption } from '../controllers/adoptionsController';
-import { authenticate, authorize } from '../middleware/auth';
+import { authenticate, authorize, optionalAuthenticate } from '../middleware/auth';
 
 const router = Router();
 
@@ -10,8 +10,7 @@ const router = Router();
  *   get:
  *     summary: Get all adoptions
  *     tags: [Adoptions]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     responses:
  *       200:
  *         description: Adoptions retrieved successfully
@@ -24,7 +23,7 @@ const router = Router();
  *       201:
  *         description: Adoption created successfully
  */
-router.get('/', authenticate, getAdoptions);
+router.get('/', optionalAuthenticate, getAdoptions);
 router.post('/', authenticate, createAdoption);
 
 /**
@@ -33,8 +32,7 @@ router.post('/', authenticate, createAdoption);
  *   get:
  *     summary: Get adoption by ID
  *     tags: [Adoptions]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -73,7 +71,7 @@ router.post('/', authenticate, createAdoption);
  *       200:
  *         description: Adoption deleted successfully
  */
-router.get('/:id', authenticate, getAdoptionById);
+router.get('/:id', optionalAuthenticate, getAdoptionById);
 router.put('/:id', authenticate, authorize('clinic_staff', 'super_admin'), updateAdoption);
 router.delete('/:id', authenticate, authorize('super_admin'), deleteAdoption);
 

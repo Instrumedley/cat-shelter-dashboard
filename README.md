@@ -73,7 +73,7 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
    ```
 
 4. **Access the application**
-   - Frontend: http://localhost:3000
+   - Frontend: http://localhost:3001
    - Backend API: http://localhost:7000
    - API Documentation: http://localhost:7000/api-docs
 

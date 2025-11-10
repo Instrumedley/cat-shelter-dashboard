@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getDonations, getDonationById, createDonation, getFundraisingCampaigns } from '../controllers/donationsController';
-import { authenticate, authorize } from '../middleware/auth';
+import { authenticate, authorize, optionalAuthenticate } from '../middleware/auth';
 
 const router = Router();
 
@@ -10,8 +10,7 @@ const router = Router();
  *   get:
  *     summary: Get all donations
  *     tags: [Donations]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     responses:
  *       200:
  *         description: Donations retrieved successfully
@@ -24,8 +23,21 @@ const router = Router();
  *       201:
  *         description: Donation created successfully
  */
-router.get('/', authenticate, authorize('clinic_staff', 'super_admin'), getDonations);
+router.get('/', optionalAuthenticate, getDonations);
 router.post('/', authenticate, createDonation);
+
+/**
+ * @swagger
+ * /api/donations/campaigns:
+ *   get:
+ *     summary: Get fundraising campaigns
+ *     tags: [Donations]
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Fundraising campaigns retrieved successfully
+ */
+router.get('/campaigns', optionalAuthenticate, getFundraisingCampaigns);
 
 /**
  * @swagger
@@ -33,8 +45,7 @@ router.post('/', authenticate, createDonation);
  *   get:
  *     summary: Get donation by ID
  *     tags: [Donations]
- *     security:
- *       - bearerAuth: []
+ *     security: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -45,20 +56,6 @@ router.post('/', authenticate, createDonation);
  *       200:
  *         description: Donation retrieved successfully
  */
-router.get('/:id', authenticate, authorize('clinic_staff', 'super_admin'), getDonationById);
-
-/**
- * @swagger
- * /api/donations/campaigns:
- *   get:
- *     summary: Get fundraising campaigns
- *     tags: [Donations]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Fundraising campaigns retrieved successfully
- */
-router.get('/campaigns', authenticate, getFundraisingCampaigns);
+router.get('/:id', optionalAuthenticate, getDonationById);
 
 export { router as donationsRoutes };

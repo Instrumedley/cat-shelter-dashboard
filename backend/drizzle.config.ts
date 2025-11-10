@@ -5,6 +5,6 @@ export default {
   out: './src/db/migrations',
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/cat_shelter',
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5434/cat_shelter',
   },
 } satisfies Config;
