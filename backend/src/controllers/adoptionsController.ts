@@ -55,7 +55,13 @@ export const getAdoptionById = async (req: Request, res: Response, next: NextFun
 
 export const createAdoption = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newAdoption = await db.insert(adoptions).values(req.body).returning();
+    // Convert date strings to Date objects if provided
+    const adoptionData: any = { ...req.body };
+    if (req.body.adoptionDate) {
+      adoptionData.adoptionDate = new Date(req.body.adoptionDate);
+    }
+    
+    const newAdoption = await db.insert(adoptions).values(adoptionData).returning();
     
     res.status(201).json({
       success: true,
@@ -69,9 +75,16 @@ export const createAdoption = async (req: Request, res: Response, next: NextFunc
 export const updateAdoption = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    
+    // Convert date strings to Date objects if provided
+    const updateData: any = { ...req.body, updatedAt: new Date() };
+    if (req.body.adoptionDate) {
+      updateData.adoptionDate = new Date(req.body.adoptionDate);
+    }
+    
     const updatedAdoption = await db
       .update(adoptions)
-      .set({ ...req.body, updatedAt: new Date() })
+      .set(updateData)
       .where(eq(adoptions.id, parseInt(id)))
       .returning();
     

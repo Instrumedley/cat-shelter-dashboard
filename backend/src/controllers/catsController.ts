@@ -37,7 +37,13 @@ export const getCatById = async (req: Request, res: Response, next: NextFunction
 
 export const createCat = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newCat = await db.insert(cats).values(req.body).returning();
+    // Convert date strings to Date objects
+    const catData = {
+      ...req.body,
+      entryDate: req.body.entryDate ? new Date(req.body.entryDate) : new Date(),
+    };
+    
+    const newCat = await db.insert(cats).values(catData).returning();
     
     res.status(201).json({
       success: true,
@@ -51,9 +57,16 @@ export const createCat = async (req: Request, res: Response, next: NextFunction)
 export const updateCat = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    
+    // Convert date strings to Date objects if provided
+    const updateData: any = { ...req.body, updatedAt: new Date() };
+    if (req.body.entryDate) {
+      updateData.entryDate = new Date(req.body.entryDate);
+    }
+    
     const updatedCat = await db
       .update(cats)
-      .set({ ...req.body, updatedAt: new Date() })
+      .set(updateData)
       .where(eq(cats.id, parseInt(id)))
       .returning();
     
