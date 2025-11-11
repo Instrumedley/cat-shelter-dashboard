@@ -8,16 +8,16 @@ import {
   useCampaign,
 } from '../hooks/useStats';
 import LoginModal from '../components/LoginModal';
+import Header from '../components/Header';
 import MetricCard from '../components/MetricCard';
 import AdoptionChart from '../components/AdoptionChart';
 import MultiLineChart from '../components/MultiLineChart';
 import FundraisingProgress from '../components/FundraisingProgress';
-import { LogIn, User } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { getSocket, disconnectSocket } from '../services/socket';
+import { getSocket } from '../services/socket';
 
 const Dashboard: React.FC = () => {
-  const { user, login, logout } = useAuth();
+  const { user, login } = useAuth();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [timeframe, setTimeframe] = useState<'month' | 'year'>('month');
   const [medicalTimeframe, setMedicalTimeframe] = useState<'month' | 'year' | 'all'>('month');
@@ -184,45 +184,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">
-                🐱 Cat Shelter Dashboard
-              </h1>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              {user ? (
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2">
-                    <User className="h-5 w-5 text-gray-500" />
-                    <span className="text-sm font-medium text-gray-700">
-                      {user.username} ({user.role.replace('_', ' ')})
-                    </span>
-                  </div>
-                  <button
-                    onClick={logout}
-                    className="text-sm text-gray-500 hover:text-gray-700"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => setIsLoginModalOpen(true)}
-                  className="flex items-center space-x-2 btn-primary"
-                >
-                  <LogIn className="h-4 w-4" />
-                  <span>Login</span>
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header onLoginClick={() => setIsLoginModalOpen(true)} />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -449,12 +411,10 @@ const Dashboard: React.FC = () => {
                   let filteredSpayed = neuteredCatsData.series.spayed;
                   
                   if (medicalTimeframe === 'month') {
-                    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
                     const monthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
                     filteredNeutered = neuteredCatsData.series.neutered.filter(item => item.month === monthStr);
                     filteredSpayed = neuteredCatsData.series.spayed.filter(item => item.month === monthStr);
                   } else if (medicalTimeframe === 'year') {
-                    const startOfYear = new Date(now.getFullYear(), 0, 1);
                     const yearStr = now.getFullYear().toString();
                     filteredNeutered = neuteredCatsData.series.neutered.filter(item => item.month.startsWith(yearStr));
                     filteredSpayed = neuteredCatsData.series.spayed.filter(item => item.month.startsWith(yearStr));

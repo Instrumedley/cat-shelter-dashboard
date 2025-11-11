@@ -115,7 +115,7 @@ async function seedDatabase() {
         password: hashedPassword,
         email: adopterEmails[i],
         phone: adopterPhones[i],
-        role: 'public'
+        role: 'public' as const
       });
     }
     
@@ -172,7 +172,7 @@ async function seedDatabase() {
         catId: cat.id,
         userId: adopterUser.id,
         adoptedWith,
-        status: 'completed', // Since these are adopted cats
+        status: 'completed' as const, // Since these are adopted cats
         adoptionDate,
         notes: Math.random() > 0.5 ? 'Great family, perfect match!' : null
       });

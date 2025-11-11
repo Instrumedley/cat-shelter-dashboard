@@ -8,7 +8,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { AdoptionHistory } from '../types';
 
 interface AdoptionChartProps {
   data: Array<{ month: string; count: number }>;
