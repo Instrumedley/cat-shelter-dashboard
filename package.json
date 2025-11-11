@@ -11,8 +11,8 @@
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
     "seed": "cd backend && npm run seed",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

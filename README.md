@@ -50,7 +50,7 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
 
 1. **Clone and setup**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Instrumedley/cat-shelter-dashboard
    cd cat-shelter-dashboard
    npm install
    ```
@@ -61,9 +61,9 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
    npm run docker:up
    
    # Or start individually
-   docker-compose up -d postgres
-   docker-compose up -d backend
-   docker-compose up -d frontend
+   docker compose up -d postgres
+   docker compose up -d backend
+   docker compose up -d frontend
    ```
 
 3. **Seed the database**
@@ -96,7 +96,7 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
 3. **Database Setup**
    ```bash
    # Start PostgreSQL
-   docker-compose up -d postgres
+   docker compose up -d postgres
    
    # Run migrations
    cd backend
