@@ -74,8 +74,8 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
 
 4. **Access the application**
    - Frontend: http://localhost:3001
-   - Backend API: http://localhost:7000
-   - API Documentation: http://localhost:7000/api-docs
+   - Backend API: http://localhost:7005
+   - API Documentation: http://localhost:7005/api-docs
 
 ### Development Setup
 
@@ -169,22 +169,9 @@ The dashboard uses WebSocket connections to provide real-time updates:
 - All public permissions
 - View incoming cats metrics
 - View medical procedures data
-- Manage cats and adoptions
+- Access to back-office management tool
 
 ### Super Admin
 - All permissions
 - Full system access
-- User management
-- Complete data management
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
+- Access to back-office management tool
