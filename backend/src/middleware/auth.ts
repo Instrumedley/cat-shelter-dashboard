@@ -2,12 +2,25 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { createError } from './errorHandler';
 
+// Extend Express Request with user property
+// Using intersection type to avoid ReadableStream method conflicts
 export interface AuthRequest extends Request {
   user?: {
     id: number;
     username: string;
     role: string;
   };
+}
+
+// Type augmentation to fix pause/resume method conflicts
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: {
+      id: number;
+      username: string;
+      role: string;
+    };
+  }
 }
 
 export const authenticate = (req: AuthRequest, res: Response, next: NextFunction) => {
