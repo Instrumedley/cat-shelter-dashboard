@@ -55,56 +55,45 @@ A comprehensive stats dashboard for a Cat Shelter Adoption Center built with Nod
    npm install
    ```
 
-2. **Start with Docker**
+2. **Start database and backend with Docker**
    ```bash
-   # Start all services
+   # Start PostgreSQL and backend services
    npm run docker:up
    
    # Or start individually
    docker compose up -d postgres
    docker compose up -d backend
-   docker compose up -d frontend
    ```
 
-3. **Seed the database**
+3. **Start the frontend locally**
    ```bash
-   # Run the seeding script
-   npm run seed
-   ```
-
-4. **Access the application**
-   - Frontend: http://localhost:3001
-   - Backend API: http://localhost:7005
-   - API Documentation: http://localhost:7005/api-docs
-
-### Development Setup
-
-1. **Backend Development**
-   ```bash
-   cd backend
-   npm install
-   npm run dev
-   ```
-
-2. **Frontend Development**
-   ```bash
+   # Install frontend dependencies (if not already done)
    cd frontend
    npm install
+   
+   # Start the frontend development server
    npm run dev
    ```
 
-3. **Database Setup**
+4. **Setup and seed the database**
    ```bash
-   # Start PostgreSQL
+   # Start PostgreSQL (if not already running)
    docker compose up -d postgres
    
    # Run migrations
    cd backend
    npm run db:migrate
    
-   # Seed data
+   # Run the seeding script
    npm run seed
    ```
+
+5. **Access the application**
+   - Frontend: http://localhost:3001
+   - Backend API: http://localhost:7005
+   - API Documentation: http://localhost:7005/api-docs
+
+    
 
 ## Test Accounts
 
